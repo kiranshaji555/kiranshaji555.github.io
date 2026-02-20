@@ -72,11 +72,9 @@
   .nav-inner { display: flex; justify-content: space-between; align-items: center; }
   .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; text-decoration: none; color: var(--white); }
   .logo span { color: var(--blue); }
-
-  /* Desktop nav links — visible by default */
-  #navLinks { display: flex; gap: 40px; align-items: center; list-style: none; margin: 0; padding: 0; }
-  #navLinks a { text-decoration: none; color: var(--gray); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
-  #navLinks a:hover { color: var(--white); }
+  .nav-links { display: flex; gap: 40px; align-items: center; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
   .nav-cta {
     padding: 9px 22px; background: var(--blue); color: #fff;
     border-radius: 6px; font-size: 0.72rem; font-weight: 700;
@@ -85,16 +83,20 @@
   }
   .nav-cta:hover { background: var(--blue-light); transform: translateY(-1px); }
 
-  /* Hamburger — hidden on desktop, shown on mobile via JS */
-  #hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-  #hamburger span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; }
-
-  /* Mobile fullscreen menu */
+  /* hamburger — hidden on desktop, shown only on mobile */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: all 0.3s; }
   .mobile-menu { display: none; position: fixed; inset: 0; background: var(--black); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
   .mobile-menu.open { display: flex; }
   .mobile-menu a { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.08em; color: var(--white); text-decoration: none; transition: color 0.2s; }
   .mobile-menu a:hover { color: var(--blue); }
   .mobile-close { position: absolute; top: 24px; right: 32px; background: none; border: none; color: var(--white); font-size: 2rem; cursor: pointer; }
+
+  /* Desktop: show nav links, hide hamburger */
+  @media (min-width: 769px) {
+    .hamburger { display: none !important; }
+    .nav-links { display: flex !important; }
+  }
 
   /* ─── HERO ─── */
   #hero {
@@ -133,55 +135,39 @@
 
   /* profile card */
   .hero-visual { display: flex; justify-content: flex-end; opacity: 0; animation: scaleIn 0.9s 0.5s forwards; }
-  .profile-card { position: relative; padding: 50px; }
+  .profile-card { position: relative; }
   .profile-ring {
-    position: absolute; inset: -20px;
-    border: 2px solid rgba(37,99,235,0.75);
+    position: absolute; inset: -16px;
+    border: 1.5px solid rgba(37,99,235,0.25);
     border-radius: 50%;
-    animation: spin 10s linear infinite;
-    box-shadow: 0 0 20px rgba(37,99,235,0.4), inset 0 0 20px rgba(37,99,235,0.1);
+    animation: spin 18s linear infinite;
   }
   .profile-ring::after {
     content: '';
-    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-    width: 12px; height: 12px; background: var(--blue); border-radius: 50%;
-    box-shadow: 0 0 22px 6px var(--blue), 0 0 44px var(--blue);
-  }
-  .profile-ring-2 {
-    position: absolute; inset: -42px;
-    border: 1.5px dashed rgba(37,99,235,0.35);
-    border-radius: 50%;
-    animation: spin 24s linear infinite reverse;
-  }
-  .profile-ring-2::after {
-    content: '';
-    position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
-    width: 8px; height: 8px; background: var(--blue-light); border-radius: 50%;
-    box-shadow: 0 0 16px 4px var(--blue-light);
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px; background: var(--blue); border-radius: 50%;
+    box-shadow: 0 0 12px var(--blue);
   }
   .profile-img-wrap {
-    width: clamp(240px, 30vw, 380px);
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
+    width: clamp(240px, 30vw, 400px);
+    aspect-ratio: 1;
+    border-radius: 24px;
     overflow: hidden;
-    border: 3px solid rgba(37,99,235,0.6);
+    border: 1px solid var(--border);
     position: relative;
-    box-shadow: 0 0 60px rgba(37,99,235,0.3), 0 0 120px rgba(37,99,235,0.1);
-    clip-path: circle(50%);
   }
-  .profile-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(1); transition: filter 1s; display: block; }
+  .profile-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: filter 1s; }
   .profile-img-wrap:hover img { filter: grayscale(0); }
   .profile-img-wrap::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 65%, rgba(8,8,8,0.3) 100%);
-    border-radius: 50%;
+    background: linear-gradient(180deg, transparent 60%, rgba(8,8,8,0.5) 100%);
   }
   .profile-stat {
-    position: absolute; bottom: 10px; left: -10px;
-    background: rgba(30,30,30,0.95); border: 1px solid var(--border);
-    padding: 14px 20px; border-radius: 12px;
-    backdrop-filter: blur(12px); z-index: 10;
+    position: absolute; bottom: -20px; left: -24px;
+    background: var(--gray-dim); border: 1px solid var(--border);
+    padding: 16px 24px; border-radius: 12px;
+    backdrop-filter: blur(12px);
   }
   .profile-stat strong { display: block; font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--blue); line-height: 1; }
   .profile-stat span { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
@@ -390,6 +376,8 @@
   }
 
   @media (max-width: 768px) {
+    .nav-links { display: none !important; }
+    .hamburger { display: block !important; }
     .skills-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; text-align: center; }
@@ -404,14 +392,14 @@
 <nav id="nav">
   <div class="container nav-inner">
     <a href="#hero" class="logo">KIRAN<span>SHAJI</span></a>
-    <ul id="navLinks">
+    <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="#" class="nav-cta">Resume</a></li>
     </ul>
-    <button id="hamburger" aria-label="Open menu">
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -442,7 +430,7 @@
         <div class="hero-actions">
           <button class="btn-primary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Get In Touch</button>
           <div class="hero-socials">
-            <a href="/cdn-cgi/l/email-protection#23484a51424d504b42494a16161663444e424a4f0d404c4e" title="Email">
+            <a href="mailto:kiranshaji555@gmail.com" title="Email">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
             </a>
             <a href="https://www.linkedin.com/in/kiranshaji555" target="_blank" rel="noopener" title="LinkedIn">
@@ -453,7 +441,6 @@
       </div>
       <div class="hero-visual">
         <div class="profile-card">
-          <div class="profile-ring-2"></div>
           <div class="profile-ring"></div>
           <div class="profile-img-wrap">
             <!-- Replace /assets/profile.jpg with your actual image path -->
@@ -735,13 +722,13 @@
         <h2 class="section-title">Let's <em>Connect</em></h2>
         <p class="contact-desc">Available for strategic delivery management roles and collaborations. Let's discuss how we can achieve your business goals.</p>
         <div class="contact-links">
-          <a href="/cdn-cgi/l/email-protection#563d3f243738253e373c3f63636316313b373f3a7835393b" class="contact-link">
+          <a href="mailto:kiranshaji555@gmail.com" class="contact-link">
             <div class="contact-link-icon">
               <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
             </div>
             <div>
               <span class="contact-link-label">Email Me</span>
-              <span class="contact-link-val"><span class="__cf_email__" data-cfemail="2c47455e4d425f444d46451919196c4b414d4540024f4341">[email&#160;protected]</span></span>
+              <span class="contact-link-val">kiranshaji555@gmail.com</span>
             </div>
           </a>
           <a href="https://www.linkedin.com/in/kiranshaji555" target="_blank" rel="noopener" class="contact-link">
@@ -805,30 +792,15 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Sticky nav
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Responsive nav: show hamburger only on mobile
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-
-  function updateNav() {
-    if (window.innerWidth <= 768) {
-      hamburger.style.display = 'block';
-      navLinks.style.display = 'none';
-    } else {
-      hamburger.style.display = 'none';
-      navLinks.style.display = 'flex';
-    }
-  }
-  updateNav();
-  window.addEventListener('resize', updateNav);
-
   // Mobile menu
+  const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileClose = document.getElementById('mobileClose');
   hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
@@ -846,4 +818,17 @@
   const expCards = document.querySelectorAll('.exp-card');
   const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) 
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'scale(1)';
+        cardObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  expCards.forEach(c => {
+    c.style.transform = 'scale(0.96)';
+    cardObserver.observe(c);
+  });
+</script>
+</body>
+</html>
